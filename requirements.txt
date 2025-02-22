@@ -1,0 +1,28 @@
+# Core LLM and Embedding Model
+openai>=1.3.5
+
+# Orchestration
+langgraph>=0.1.0
+langchain>=0.1.10
+
+# Vector Database
+qdrant-client>=1.6.0
+
+# Monitoring
+langsmith>=0.0.60
+
+# Evaluation
+ragas>=0.0.8
+
+# User Interface
+chainlit>=1.0.0
+
+# Serving & Inference
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+
+# Other Utilities
+pydantic>=2.5.0
+numpy>=1.26.0
+pandas>=2.1.0
+tqdm>=4.66.0

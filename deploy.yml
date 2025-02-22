@@ -1,0 +1,42 @@
+name: Deploy HEAL DATA SYNC
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Set up Virtual Environment
+        run: uv venv .venv
+
+      - name: Install Dependencies
+        run: uv pip sync requirements.txt
+
+      - name: Run Tests
+        run: pytest
+
+      - name: Build Docker Image
+        run: docker build -t heal-data-sync .
+
+      - name: Push Docker Image to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker tag heal-data-sync your-dockerhub-username/heal-data-sync:latest
+          docker push your-dockerhub-username/heal-data-sync:latest
+
+      - name: Deploy to Cloud Provider
+        run: echo "Deployment script goes here."
